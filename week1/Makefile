@@ -13,5 +13,5 @@ $(TARGET): $(SRCS)
     $(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
 
 # Clean rule to remove compiled files
-clean:
+clean:git 
     rm -f $(TARGET)
