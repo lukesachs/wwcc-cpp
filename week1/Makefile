@@ -1,17 +1,22 @@
-# Compiler and flags
-CXX = g++
-CXXFLAGS = -Wall -std=c++17
+# Compiler to use
+CC = g++
 
-# Target executable
-TARGET = makefile_demo
+# Compiler flags
+CFLAGS = -Wall -std=c++17
+
+# Target executable name
+TARGET = makefile_demo.exe
 
 # Source files
-SRCS = makefile_demo.cpp
+SOURCES = makefile_demo.cpp
 
-# Build rule
-$(TARGET): $(SRCS)
-    $(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
+# Default target
+all: $(TARGET)
 
-# Clean rule to remove compiled files
-clean:git 
-    rm -f $(TARGET)
+# Link and compile
+$(TARGET): $(SOURCES)
+    $(CC) $(CFLAGS) -o $(TARGET) $(SOURCES)
+
+# Clean up
+clean:
+    del $(TARGET)
