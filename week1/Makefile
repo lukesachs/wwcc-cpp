@@ -15,8 +15,8 @@ all: $(TARGET)
 
 # Link and compile
 $(TARGET): $(SOURCES)
-    $(CC) $(CFLAGS) -o $(TARGET) $(SOURCES)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES)
 
 # Clean up
 clean:
-    del $(TARGET)
+	del $(TARGET)
