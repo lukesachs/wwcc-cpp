@@ -6,7 +6,7 @@ int main() {
     double temperature;
     char unit;
     double newTemp;
-    
+
     cout << "Temperature Converter" << endl;
     
     cout << "enter tempertaure value: " << endl;
@@ -22,7 +22,6 @@ int main() {
         newTemp = (temperature-32)*5/9;
         cout << temperature << "°F is equal to " << newTemp << "°C"<< endl;
     }
-    
     
     return 0;
 }

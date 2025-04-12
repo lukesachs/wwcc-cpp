@@ -3,10 +3,10 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++17
 
 # Target executable
-TARGET = my_program
+TARGET = makefile_demo
 
 # Source files
-SRCS = my_program.cpp
+SRCS = makefile_demo.cpp
 
 # Build rule
 $(TARGET): $(SRCS)
