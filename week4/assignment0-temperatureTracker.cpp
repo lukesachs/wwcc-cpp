@@ -21,7 +21,7 @@ int main(){
     int minTempIndex = 0;
     int max = weekTemp[0];
     int maxTempIndex = 0;
-    double average;
+    int total = 0;
     cout << "\nTemperature Analysis:" << endl;
 
     for(int i = 0; i < days; i++){
@@ -33,10 +33,10 @@ int main(){
             max = weekTemp[i];
             maxTempIndex = i;
         }
-        average = average + weekTemp[i];
+        total = total + weekTemp[i];
     }
 
-    average = average/double(days);
+    double average = static_cast<double>(total) / days;
     stringstream sstr;
     sstr << fixed << setprecision(1) << average;
     average = stod(sstr.str());
