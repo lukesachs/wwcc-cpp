@@ -51,4 +51,6 @@ int main(){
             cout << "- Day " << i+1 << ": " << weekTemp[i] << "°F" << endl;
         }
     }
+
+    return 0;
 }
