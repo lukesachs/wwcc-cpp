@@ -55,3 +55,43 @@ bool checkBalance(double accountBalance) {
         return true;
     }
 }
+bool mainMenuValid(int option){
+    if (cin.fail()) {
+        cout << "Invalid input! Only numbers allowed." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return false;
+    } else if(option < 1 || option > 4){
+        cout << "Invalid Input! Must input 1, 2, 3, or 4." << endl;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool transactionMenuValid(int option){
+    if (cin.fail()) {
+        cout << "Invalid input! Only numbers allowed." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return false;
+    } else if(option < 1 || option > 3){
+        cout << "Invalid Input! Must input 1, 2, or 3." << endl;
+        return false;
+    } else {
+        return true;
+    }
+}
+bool accountMenuValid(int option){
+    if (cin.fail()) {
+        cout << "Invalid input! Only numbers allowed." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return false;
+    } else if(option < 1 || option > 3){
+        cout << "Invalid Input! Must input 1, 2, or 3." << endl;
+        return false;
+    } else {
+        return true;
+    }
+}

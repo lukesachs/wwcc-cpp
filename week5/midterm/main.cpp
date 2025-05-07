@@ -4,23 +4,11 @@
 #include <limits>
 #include "account.h"
 #include "userInterface.h"
-
+#include "validation.h"
+#include "menu.h"
 using namespace std;
 
 
-// Function prototypes
-void displayAccountOptions();
-void displayTransactionOptions();
-void displayDate(Date d);
-void welcomeUser();
-void displayUserOptions();
-Account createAccount();
-int getAccountNumber();
-bool checkAccountNumber(int accountNumber);
-string inputAccountName();
-bool checkAccountName(string accountName);
-double inputBalance();
-bool checkBalance(double accountBalance);
 
 // Main function
 int main() {
@@ -32,7 +20,11 @@ int main() {
     do{
         displayUserOptions();
         cin >> option;
-
+        if(!mainMenuValid(option)){
+           continue;
+        }
+        mainMenuInput(accounts, option);
     } while(option != 4);
+
     return 0;
 }
