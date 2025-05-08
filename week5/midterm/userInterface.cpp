@@ -42,3 +42,20 @@ void shutDown(){
     cout << "Thank you for using the extremely legitimate banking service!\nWe hope you found our services to be helpful." << endl;
     cout << "\n\n\nSHUTTING DOWN......." << endl;
 }
+
+void getTransactionHistory(const Account &accounts){
+    cout << "Transaction History for " << accounts.holderName << ": ID#" << accounts.accountNumber << endl;
+    for(int i = 0; i < accounts.transactionCount; i++){
+        cout << i + 1 << "." << endl; 
+        displayDate(accounts.history[i].date);
+        cout << accounts.history[i].type << ": $" << accounts.history[i].amount << endl;
+    }
+}
+
+void getAccountStatement(Account accounts){
+    cout << "*********** ACCOUNT STATEMENT ***********" << endl;
+    cout << "Account ID#: " << accounts.accountNumber << endl;
+    cout << "Account Owner Name: " << accounts.holderName << endl;
+    
+
+}

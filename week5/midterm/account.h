@@ -13,7 +13,7 @@ struct Date {
 };
 
 struct Transaction {
-    std::string type;  // "deposit", "withdrawal", "transfer"
+    string type;  // "deposit", "withdrawal", "transfer"
     double amount;
     Date date;
 };
@@ -29,10 +29,10 @@ struct Account {
 // Function prototypes (declarations only)
 Account createAccount();
 int getAccountNumber();
-bool checkAccountNumber(int accountNumber);
 string inputAccountName();
-bool checkAccountName(string accountName);
 double inputBalance();
-bool checkBalance(double accountBalance);
-
+void depositFunds(Account &accounts);
+void withdrawFunds(Account &accounts);
+void transferFunds(Account &accounts, Account &accounts2);
+int chooseID(const vector<Account> &accounts);
 #endif // skips definition if already defined previously

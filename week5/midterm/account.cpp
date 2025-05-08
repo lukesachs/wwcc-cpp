@@ -3,24 +3,26 @@
 #include <vector>
 #include <limits>
 #include "account.h"
+#include "validation.h"
 
 using namespace std;
 
 //implement functions
 Account createAccount() {
-    Account account;
-    account.accountNumber = getAccountNumber();
-    account.holderName = inputAccountName();
-    account.balance = inputBalance();
+    Account accounts;
+    accounts.accountNumber = getAccountNumber();
+    accounts.holderName = inputAccountName();
+    accounts.balance = inputBalance();
+    accounts.transactionCount = 0;
 
-    return account;
+    return accounts;
 }
 
 
 int getAccountNumber() {
     int accountNumber = 0;
     bool isValid = false;
-
+    
     while (!isValid) {
         cout << "Please create a 6 digit account number: ";
         cin >> accountNumber;
@@ -60,4 +62,63 @@ double inputBalance() {
     }
 
     return accountBalance;
+}
+
+int chooseID(const vector<Account> &accounts){
+    int accountID;
+    int index;
+    do{
+        cout << "Please enter the ID number of the account you wish to access :" << endl;
+        cin >> accountID;
+    }while(!confirmID(accountID, accounts, index));
+    return index;
+}
+
+void depositFunds(Account &accounts){
+    int index = accounts.transactionCount;
+    double funds = 0.0;
+    accounts.history[accounts.transactionCount].type = "deposit";
+    do{
+    cout << "Please enter the amount of money to be deposited" << endl;
+    cin >> funds;
+    } while(!checkTransaction(funds, accounts, index));
+
+    accounts.balance += funds;
+    cout << "New account balance is $" << accounts.balance;
+    accounts.transactionCount++;
+
+}
+void withdrawFunds(Account &accounts){
+    int index = accounts.transactionCount;
+    double funds = 0.0;
+    accounts.history[index].type = "withdrawal";
+    do{
+    cout << "Please enter the amount of money to be withdrawn" << endl;
+    cin >> funds;
+    } while(!checkTransaction(funds, accounts, index));
+
+    accounts.balance -= funds;
+    cout << "New account balance is $" << accounts.balance;
+    accounts.transactionCount++;
+}
+
+void transferFunds(Account &accounts, Account &accounts2){
+    int index = accounts.transactionCount;
+    int index2 = accounts.transactionCount;
+    double funds = 0.0;
+
+    accounts.history[index].type = "transfer";
+    accounts2.history[index2].type = "transfer";
+
+    do{
+        cout << "Please enter the amount of money to be transfered" << endl;
+        cin >> funds;
+    } while(!checkTransaction(funds, accounts, index));
+
+    accounts.balance -= funds;
+    accounts2.balance += funds;
+    cout << "New account balance for " << accounts.accountNumber << " is $" << accounts.balance;
+    cout << "New account balance for " << accounts2.accountNumber << " is $" << accounts2.balance;
+    accounts.transactionCount++;
+    accounts2.transactionCount++;
 }

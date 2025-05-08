@@ -46,20 +46,21 @@ void mainMenuInput(vector<Account> &accounts, int option){
 
 void accountMenuInput(vector<Account> &accounts, int option){
     bool isValid = true;
-    int accountID;
+    int ID = chooseID(accounts);;
+    int index;
+
     
     switch(option){
         case 1: //Transaction History
+            getTransactionHistory(accounts[ID]);
             break;
         case 2: //Account Statements
-            displayUserOptions();
-            cin >> option;
-    
-            
+            getAccountStatement(accounts[ID]);
+
             break;
         case 3: //Personal Info
-            displayTransactionOptions();
-            cin >> option;
+            
+            
 
             break;
         default:
@@ -71,17 +72,22 @@ void accountMenuInput(vector<Account> &accounts, int option){
 
 
 void transactionMenuInput(vector<Account> &accounts, int option){
+    int index = chooseID(accounts);
     switch(option){
         case 1: //Deposit Funds
-
+            depositFunds(accounts[index]);
             break;
         case 2: //Withdraw Funds
-    
-
+            withdrawFunds(accounts[index]);
             break;
         case 3: //Transfer Funds
-
-            
+            if(accounts.size()<2){
+                cout << "Must have at least two accounts in the system to be able to transfer funds" << endl;
+                break;
+            }
+            cout << "What Account ID# are you transfering to?" << endl;
+            int index2 = chooseID(accounts);
+            transferFunds(accounts[index], accounts[index2]);
             break;
         default: 
             cout << "ERROR" << endl;

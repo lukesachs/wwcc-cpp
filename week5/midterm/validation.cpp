@@ -95,3 +95,42 @@ bool accountMenuValid(int option){
         return true;
     }
 }
+
+bool confirmID(int ID, const vector<Account> &accounts, int &index){
+    if (cin.fail()) {
+        cout << "Invalid input! Only numbers allowed." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return false;
+    } else if (ID < 100000 || ID > 999999) {
+        cout << "Invalid input! Account number must be 6 digits." << endl;
+        return false;
+    }
+
+    for(int i = 0; i < accounts.size(); i++){
+        if(ID == accounts[i].accountNumber){
+            index = i;
+            return true;
+        }
+    }
+    cout << "Invalid input! ID number not found." << endl;
+    return false;
+}
+bool checkTransaction(double amount, Account accounts, int index) {
+    string transactionType = accounts.history[index].type;
+    if (cin.fail()) {
+        cout << "Invalid input!" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return false;
+    } else if (amount < 0) {
+        cout << "Invalid input! Transaction amount cannot be negative." << endl;
+        return false;
+    }
+    if((transactionType == "transfer" || transactionType == "withdrawal") && amount > accounts.balance){
+        return false;
+    }
+    return true;
+
+
+}
