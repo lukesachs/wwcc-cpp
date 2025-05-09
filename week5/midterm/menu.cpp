@@ -4,34 +4,35 @@
 #include "menu.h"
 #include "userInterface.h"
 #include "validation.h"
+using namespace std;
 
-void mainMenuInput(vector<Account> &accounts, int option){
-    bool isValid = true;
+void mainMenuInput(vector<Account> &account, int option){
+    bool isValid = false;
+    int subOption;
     switch(option){
     case 1: //create account
-    accounts.push_back(createAccount());
+    account.push_back(createAccount());
         break;
     case 2: //access account info
         displayAccountOptions();
         do{
-            cin >> option;
-            if(accountMenuValid(option)){
-                isValid = false;
+            cin >> subOption;
+            if(accountMenuValid(subOption)){
+                isValid = true;
             }
         }while(!isValid);
 
-        accountMenuInput(accounts, option);
+        accountMenuInput(account, subOption);
     break;
     case 3: //make transaction
         displayTransactionOptions();
         do{
-            cin >> option;
-            if(transactionMenuValid(option)){
-                isValid = false;
+            cin >> subOption;
+            if(transactionMenuValid(subOption)){
+                isValid = true;
             }
         }while(!isValid);
-
-        transactionMenuInput(accounts, option);
+        transactionMenuInput(account, subOption);
         break;
     case 4: //exit program
         shutDown();
@@ -44,21 +45,17 @@ void mainMenuInput(vector<Account> &accounts, int option){
 
 
 
-void accountMenuInput(vector<Account> &accounts, int option){
-    bool isValid = true;
-    int ID = chooseID(accounts);
-    int index;
-
-    
+void accountMenuInput(vector<Account> &account, int option){
+    int ID = chooseID(account);
     switch(option){
         case 1: //Transaction History
-            getTransactionHistory(accounts[ID]);
+            getTransactionHistory(account[ID]);
             break;
         case 2: //Account Statements
-            getAccountStatement(accounts[ID]);
+            getAccountStatement(account[ID]);
             break;
         case 3: //Personal Info
-            getPersonalInfo(accounts[ID]);
+            getPersonalInfo(account[ID]);
             break;
         default:
             cout << "ERROR" << endl;
@@ -68,21 +65,21 @@ void accountMenuInput(vector<Account> &accounts, int option){
 
 
 
-void transactionMenuInput(vector<Account> &accounts, int option){
-    int index = chooseID(accounts);
+void transactionMenuInput(vector<Account> &account, int option){
+    int index = chooseID(account);
     switch(option){
         case 1: //Deposit Funds
-            depositFunds(accounts[index]);
+            depositFunds(account[index]);
             break;
         case 2: //Withdraw Funds
-            withdrawFunds(accounts[index]);
+            withdrawFunds(account[index]);
             break;
         case 3: //Transfer Funds
-            int index2 = chooseID2(accounts);
-            if(index2 = -1){
+            int index2 = chooseID2(account);
+            if(index2 == -1){
                 break;
             }
-            transferFunds(accounts[index], accounts[index2]);
+            transferFunds(account[index], account[index2]);
             break;
         default: 
             cout << "ERROR" << endl;

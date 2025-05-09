@@ -3,7 +3,6 @@
 #include <vector>
 #include <limits>
 #include "validation.h"
-
 using namespace std;
 
 
@@ -97,7 +96,7 @@ bool accountMenuValid(int option){
     }
 }
 
-bool confirmID(int ID, const vector<Account> &accounts, int &index, bool secondID){
+bool confirmID(int ID, const vector<Account> &account, int &index, bool secondID){
     if (cin.fail()) {
         cout << "Invalid input! Only numbers allowed." << endl;
         cin.clear();
@@ -108,8 +107,8 @@ bool confirmID(int ID, const vector<Account> &accounts, int &index, bool secondI
         return false;
     }
     if(secondID){//checks if second ID exists for transaction
-        for(int i = 0; i < (int) accounts.size(); i++){
-            if(ID == accounts[i].accountNumber){
+        for(int i = 0; i < (int) account.size(); i++){
+            if(ID == account[i].accountNumber){
                 index = i;
                 return true;
             }
@@ -121,8 +120,8 @@ bool confirmID(int ID, const vector<Account> &accounts, int &index, bool secondI
     return false;
 }
 
-bool checkTransaction(double amount, const Account &accounts, int index) {
-    string transactionType = accounts.history[index].type;
+bool checkTransaction(double amount, const Account &account, int index) {
+    string transactionType = account.history[index].type;
     if (cin.fail()) {
         cout << "Invalid input!" << endl;
         cin.clear();
@@ -132,7 +131,7 @@ bool checkTransaction(double amount, const Account &accounts, int index) {
         cout << "Invalid input! Transaction amount cannot be negative." << endl;
         return false;
     }
-    if((transactionType == "transfer" || transactionType == "withdrawal") && amount > accounts.balance){
+    if((transactionType == "transfer" || transactionType == "withdrawal") && amount > account.balance){
         return false;
     }
     return true;

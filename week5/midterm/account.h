@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 
 // Struct definitions
 struct Date {
@@ -29,11 +28,11 @@ struct Account {
 // Function prototypes (declarations only)
 Account createAccount();
 int getAccountNumber();
-string inputAccountName();
+std::string inputAccountName();
 double inputBalance();
-void depositFunds(Account &accounts);
-void withdrawFunds(Account &accounts);
-void transferFunds(Account &accounts, Account &accounts2);
-int chooseID(const vector<Account> &accounts);
-int chooseID2(const vector<Account> &accounts);
+void depositFunds(Account &account);
+void withdrawFunds(Account &account);
+void transferFunds(Account &from, Account &to);
+int chooseID(const vector<Account> &account);
+int chooseID2(const vector<Account> &account);
 #endif // skips definition if already defined previously

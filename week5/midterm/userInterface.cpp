@@ -2,7 +2,6 @@
 #include <string>
 #include "account.h"
 #include "userInterface.h"
-
 using namespace std;
 
 void welcomeUser() {
@@ -43,26 +42,26 @@ void shutDown(){
     cout << "\n\n\nSHUTTING DOWN......." << endl;
 }
 
-void getTransactionHistory(const Account &accounts){
-    cout << "Transaction History for " << accounts.holderName << ": ID#" << accounts.accountNumber << endl;
-    cout << "Total transaction count: " << accounts.transactionCount << endl;
-    for(int i = 0; i < accounts.transactionCount; i++){
+void getTransactionHistory(const Account &account){
+    cout << "Transaction History for " << account.holderName << ": ID#" << account.accountNumber << endl;
+    cout << "Total transaction count: " << account.transactionCount << endl;
+    for(int i = 0; i < account.transactionCount; i++){
         cout << i + 1 << "." << endl; 
-        displayDate(accounts.history[i].date);
-        cout << accounts.history[i].type << " of $" << accounts.history[i].amount << endl;
+        displayDate(account.history[i].date);
+        cout << account.history[i].type << " of $" << account.history[i].amount << endl;
         
     }
 }
 
-void getPersonalInfo(const Account &accounts){
-    cout << "Account ID#: " << accounts.accountNumber << endl;
-    cout << "Account Owner Name: " << accounts.holderName << endl;
-    cout << "Account Balance: $" << accounts.balance << endl;
+void getPersonalInfo(const Account &account){
+    cout << "Account ID#: " << account.accountNumber << endl;
+    cout << "Account Owner Name: " << account.holderName << endl;
+    cout << "Account Balance: $" << account.balance << endl;
 }
 
-void getAccountStatement(const Account &accounts){
+void getAccountStatement(const Account &account){
     cout << "*********** ACCOUNT STATEMENT ***********" << endl;
-    getPersonalInfo(accounts);
-    getTransactionHistory(accounts);
+    getPersonalInfo(account);
+    getTransactionHistory(account);
     cout << "*****************************************" << endl;
 }

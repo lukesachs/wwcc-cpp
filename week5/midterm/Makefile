@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -std=c++17
 TARGET = simpleBankingSystem.exe
 
 # Source files
-SRCS = main.cpp account.cpp userInterface.cpp validation.cpp
+SRCS = main.cpp account.cpp userInterface.cpp validation.cpp menu.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Main build rule

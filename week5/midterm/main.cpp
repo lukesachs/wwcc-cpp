@@ -12,10 +12,10 @@ using namespace std;
 
 // Main function
 int main() {
-    vector<Account> accounts;
+    vector<Account> account;
 
     welcomeUser();
-    accounts.push_back(createAccount());
+    account.push_back(createAccount());
     int option = 0;
     do{
         displayUserOptions();
@@ -23,7 +23,7 @@ int main() {
         if(!mainMenuValid(option)){
            continue;
         }
-        mainMenuInput(accounts, option);
+        mainMenuInput(account, option);
     } while(option != 4);
 
     return 0;
