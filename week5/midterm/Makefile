@@ -11,12 +11,12 @@ OBJS = $(SRCS:.cpp=.o)
 
 # Main build rule
 $(TARGET): $(OBJS)
-    $(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 # Link and compile
 %.o: %.cpp
-    $(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean rule
 clean:
-    del $(OBJS) $(TARGET)
+	del $(OBJS) $(TARGET)
