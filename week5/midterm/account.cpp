@@ -80,7 +80,7 @@ int chooseID2(const vector<Account> &accounts){
         return -1;
     }
     cout << "What Account ID# are you transfering to?" << endl;
-    int index2 = chooseID(accounts, true);
+    return chooseID(accounts, true);
 }
 
 void depositFunds(Account &accounts){

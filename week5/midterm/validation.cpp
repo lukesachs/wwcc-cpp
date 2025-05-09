@@ -108,7 +108,7 @@ bool confirmID(int ID, const vector<Account> &accounts, int &index, bool secondI
         return false;
     }
     if(secondID){//checks if second ID exists for transaction
-        for(int i = 0; i < accounts.size(); i++){
+        for(int i = 0; i < (int) accounts.size(); i++){
             if(ID == accounts[i].accountNumber){
                 index = i;
                 return true;

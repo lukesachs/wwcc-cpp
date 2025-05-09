@@ -46,7 +46,7 @@ void mainMenuInput(vector<Account> &accounts, int option){
 
 void accountMenuInput(vector<Account> &accounts, int option){
     bool isValid = true;
-    int ID = chooseID(accounts);;
+    int ID = chooseID(accounts);
     int index;
 
     
