@@ -45,17 +45,24 @@ void shutDown(){
 
 void getTransactionHistory(const Account &accounts){
     cout << "Transaction History for " << accounts.holderName << ": ID#" << accounts.accountNumber << endl;
+    cout << "Total transaction count: " << accounts.transactionCount << endl;
     for(int i = 0; i < accounts.transactionCount; i++){
         cout << i + 1 << "." << endl; 
         displayDate(accounts.history[i].date);
-        cout << accounts.history[i].type << ": $" << accounts.history[i].amount << endl;
+        cout << accounts.history[i].type << " of $" << accounts.history[i].amount << endl;
+        
     }
 }
 
-void getAccountStatement(Account accounts){
-    cout << "*********** ACCOUNT STATEMENT ***********" << endl;
+void getPersonalInfo(const Account &accounts){
     cout << "Account ID#: " << accounts.accountNumber << endl;
     cout << "Account Owner Name: " << accounts.holderName << endl;
-    
+    cout << "Account Balance: $" << accounts.balance << endl;
+}
 
+void getAccountStatement(const Account &accounts){
+    cout << "*********** ACCOUNT STATEMENT ***********" << endl;
+    getPersonalInfo(accounts);
+    getTransactionHistory(accounts);
+    cout << "*****************************************" << endl;
 }

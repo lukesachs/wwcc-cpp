@@ -35,4 +35,5 @@ void depositFunds(Account &accounts);
 void withdrawFunds(Account &accounts);
 void transferFunds(Account &accounts, Account &accounts2);
 int chooseID(const vector<Account> &accounts);
+int chooseID2(const vector<Account> &accounts);
 #endif // skips definition if already defined previously

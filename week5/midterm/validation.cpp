@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-bool checkAccountNumber(int accountNumber) {
+bool checkNewID(int accountNumber) {
     if (cin.fail()) {
         cout << "Invalid input! Only numbers allowed." << endl;
         cin.clear();
@@ -55,6 +55,7 @@ bool checkBalance(double accountBalance) {
         return true;
     }
 }
+
 bool mainMenuValid(int option){
     if (cin.fail()) {
         cout << "Invalid input! Only numbers allowed." << endl;
@@ -96,7 +97,7 @@ bool accountMenuValid(int option){
     }
 }
 
-bool confirmID(int ID, const vector<Account> &accounts, int &index){
+bool confirmID(int ID, const vector<Account> &accounts, int &index, bool secondID){
     if (cin.fail()) {
         cout << "Invalid input! Only numbers allowed." << endl;
         cin.clear();
@@ -106,17 +107,21 @@ bool confirmID(int ID, const vector<Account> &accounts, int &index){
         cout << "Invalid input! Account number must be 6 digits." << endl;
         return false;
     }
-
-    for(int i = 0; i < accounts.size(); i++){
-        if(ID == accounts[i].accountNumber){
-            index = i;
-            return true;
+    if(secondID){//checks if second ID exists for transaction
+        for(int i = 0; i < accounts.size(); i++){
+            if(ID == accounts[i].accountNumber){
+                index = i;
+                return true;
+            }
         }
+    } else {
+        return true;
     }
     cout << "Invalid input! ID number not found." << endl;
     return false;
 }
-bool checkTransaction(double amount, Account accounts, int index) {
+
+bool checkTransaction(double amount, const Account &accounts, int index) {
     string transactionType = accounts.history[index].type;
     if (cin.fail()) {
         cout << "Invalid input!" << endl;

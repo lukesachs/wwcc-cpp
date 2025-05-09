@@ -27,7 +27,7 @@ int getAccountNumber() {
         cout << "Please create a 6 digit account number: ";
         cin >> accountNumber;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        isValid = checkAccountNumber(accountNumber);
+        isValid = checkNewID(accountNumber);
     }
 
     return accountNumber;
@@ -64,14 +64,23 @@ double inputBalance() {
     return accountBalance;
 }
 
-int chooseID(const vector<Account> &accounts){
+int chooseID(const vector<Account> &accounts, bool secondID){
     int accountID;
     int index;
     do{
         cout << "Please enter the ID number of the account you wish to access :" << endl;
         cin >> accountID;
-    }while(!confirmID(accountID, accounts, index));
+    }while(!confirmID(accountID, accounts, index, secondID));
     return index;
+}
+
+int chooseID2(const vector<Account> &accounts){
+    if(accounts.size()<2){
+        cout << "Must have at least two accounts in the system to be able to transfer funds" << endl;
+        return -1;
+    }
+    cout << "What Account ID# are you transfering to?" << endl;
+    int index2 = chooseID(accounts, true);
 }
 
 void depositFunds(Account &accounts){
@@ -86,7 +95,6 @@ void depositFunds(Account &accounts){
     accounts.balance += funds;
     cout << "New account balance is $" << accounts.balance;
     accounts.transactionCount++;
-
 }
 void withdrawFunds(Account &accounts){
     int index = accounts.transactionCount;

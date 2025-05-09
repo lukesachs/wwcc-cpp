@@ -56,12 +56,9 @@ void accountMenuInput(vector<Account> &accounts, int option){
             break;
         case 2: //Account Statements
             getAccountStatement(accounts[ID]);
-
             break;
         case 3: //Personal Info
-            
-            
-
+            getPersonalInfo(accounts[ID]);
             break;
         default:
             cout << "ERROR" << endl;
@@ -81,12 +78,10 @@ void transactionMenuInput(vector<Account> &accounts, int option){
             withdrawFunds(accounts[index]);
             break;
         case 3: //Transfer Funds
-            if(accounts.size()<2){
-                cout << "Must have at least two accounts in the system to be able to transfer funds" << endl;
+            int index2 = chooseID2(accounts);
+            if(index2 = -1){
                 break;
             }
-            cout << "What Account ID# are you transfering to?" << endl;
-            int index2 = chooseID(accounts);
             transferFunds(accounts[index], accounts[index2]);
             break;
         default: 

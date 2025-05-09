@@ -10,6 +10,7 @@ void welcomeUser();
 void displayUserOptions();
 void shutDown();
 void getTransactionHistory(const Account &accounts);
+void getPersonalInfo(const Account &accounts);
 void getAccountStatement(Account accounts);
 
 #endif //USERINTERFACE_H

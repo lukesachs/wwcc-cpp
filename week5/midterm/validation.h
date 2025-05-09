@@ -8,11 +8,11 @@
 //declare funcions
 bool checkBalance(double accountBalance);
 bool checkAccountName(string accountName);
-bool checkAccountNumber(int accountNumber);
+bool checkNewID(int accountNumber);
 bool mainMenuValid(int option);
 bool transactionMenuValid(int option);
 bool accountMenuValid(int option);
-bool confirmID(int ID, const vector<Account> &accounts, int &index);
-bool checkTransaction(double amount, Account accounts, int index);
+bool confirmID(int ID, const vector<Account> &accounts, int &index, bool secondID);
+bool checkTransaction(double amount, const Account &accounts, int index);
 
 #endif
