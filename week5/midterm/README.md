@@ -13,6 +13,8 @@ validation.cpp/h includes functions to check user input and make sure each input
 
 userInterface.cpp/h includes all functions that soley provide output such as outputting account options or transaction options.
 
+menu.cpp/h contains all user menu related functions, allowing the user to choose between multiple options for the main menu, account menu, and transaction menu
+
 Makefile allows for compilation for the compilation of these files in one command.
 
 ## How to navigate banking menu
