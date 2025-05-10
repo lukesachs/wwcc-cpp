@@ -7,7 +7,6 @@
 using namespace std;
 
 
-
 bool checkNewID(int accountNumber) {
     if (checkCinFail()) { 
         return false;
@@ -126,13 +125,15 @@ bool checkCinFail() {
     }
     return false;
 }
+
 bool checkDate(int day, int month, int year, const Account &account){
     const int calander[] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31};
-    if(day < 1 || day > calander[month - 1]){
+    
+    if(month < 1 || month > 12){
         cout << "Invalid Input! Month must be 1-12." << endl;
         return false;
     }
-    if(day > calander[month] || day < 0){
+    if(day > calander[month-1] || day < 0){
         cout << "Invalid Input! Day must be between 1-31 depending on month." << endl;
         return false;
     }
@@ -143,11 +144,12 @@ bool checkDate(int day, int month, int year, const Account &account){
     if(account.transactionCount == 0){
         return true;
     }
-    int prevYear = account.history[account.transactionCount].date.year;
-    int prevMonth = account.history[account.transactionCount].date.month;
-    int prevDay = account.history[account.transactionCount].date.day;
+    int lastIndex = account.transactionCount - 1; //finds last index
+    int prevYear = account.history[lastIndex].date.year;
+    int prevMonth = account.history[lastIndex].date.month;
+    int prevDay = account.history[lastIndex].date.day;
 
-    if(account.history[account.transactionCount].date.year > year){
+    if(account.history[lastIndex].date.year > year){
         return true;
     } else if(prevYear == year){
         if(prevMonth < month){
@@ -160,11 +162,11 @@ bool checkDate(int day, int month, int year, const Account &account){
     displayDate(account.history[account.transactionCount].date);
     cout << endl;
     return false;
-
 }
+
 bool checkDate(int day, int month, int year, const Account &to, const Account &from){
     const int calander[] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31};
-    if(month > 12 || month < 0){
+    if(month > 12 || month < 1){
         cout << "Invalid Input! Month must be 1-12." << endl;
         return false;
     }
@@ -179,23 +181,25 @@ bool checkDate(int day, int month, int year, const Account &to, const Account &f
     if(to.transactionCount == 0 && from.transactionCount == 0){
         return true;
     }
-    int prevYear = from.history[from.transactionCount].date.year;
-    int prevMonth = from.history[from.transactionCount].date.month;
-    int prevDay = from.history[from.transactionCount].date.day;
+    int lastIndex = from.transactionCount - 1;
+    int prevYear = from.history[lastIndex].date.year;
+    int prevMonth = from.history[lastIndex].date.month;
+    int prevDay = from.history[lastIndex].date.day;
 
-    int prevYear2 = to.history[to.transactionCount].date.year;
-    int prevMonth2 = to.history[to.transactionCount].date.month;
-    int prevDay2 = to.history[to.transactionCount].date.day;
+    int lastIndex2 = to.transactionCount - 1;
+    int prevYear2 = to.history[lastIndex2].date.year;
+    int prevMonth2 = to.history[lastIndex2].date.month;
+    int prevDay2 = to.history[lastIndex2].date.day;
 
-    if(to.history[to.transactionCount].date.year < year && from.history[from.transactionCount].date.year < year){
+    if(to.history[lastIndex2].date.year < year && from.history[lastIndex].date.year < year){
         return true;
-    } else if(prevYear == year && year > to.history[to.transactionCount].date.year < year){
+    } else if(prevYear == year && to.history[lastIndex2].date.year < year){
         if(prevMonth < month){
             return true;
         } else if(prevMonth == month && prevDay < day) {
             return true;
         }
-    } else if(prevYear2 == year && year > from.history[from.transactionCount].date.year < year){
+    } else if(prevYear2 == year && from.history[lastIndex].date.year < year){
         if(prevMonth2 < month){
             return true;
         } else if(prevMonth2 == month && prevDay2 < day) {
@@ -213,8 +217,8 @@ bool checkDate(int day, int month, int year, const Account &to, const Account &f
         }
     }
     cout << "Invalid Input! Date must be later than previous transaction of both accounts!" << endl;
-    displayDate(to.history[to.transactionCount].date);
-    displayDate(from.history[from.transactionCount].date);
+    displayDate(to.history[lastIndex2].date);
+    displayDate(from.history[lastIndex].date);
     cout << endl;
     return false;
 
