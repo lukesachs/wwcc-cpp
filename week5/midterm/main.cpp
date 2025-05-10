@@ -3,19 +3,19 @@
 #include <vector>
 #include <limits>
 #include "account.h"
+#include "menu.h"
 #include "userInterface.h"
 #include "validation.h"
-#include "menu.h"
 using namespace std;
 
 
 
 // Main function
 int main() {
-    vector<Account> account;
+    vector<Account> accounts;
 
     welcomeUser();
-    account.push_back(createAccount());
+    accounts.push_back(createAccount(accounts));
     int option = 0;
     do{
         displayUserOptions();
@@ -23,7 +23,7 @@ int main() {
         if(!mainMenuValid(option)){
            continue;
         }
-        mainMenuInput(account, option);
+        mainMenuInput(accounts, option);
     } while(option != 4);
 
     return 0;

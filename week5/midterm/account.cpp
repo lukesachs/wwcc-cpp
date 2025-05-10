@@ -7,9 +7,9 @@
 using namespace std;
 
 //implement functions
-Account createAccount() {
+Account createAccount(vector<Account> &accounts) {
     Account account;
-    account.accountNumber = getAccountNumber();
+    account.accountNumber = getAccountNumber(accounts);
     account.holderName = inputAccountName();
     account.balance = inputBalance();
     account.transactionCount = 0;
@@ -18,16 +18,25 @@ Account createAccount() {
 }
 
 
-int getAccountNumber() {
+int getAccountNumber(const vector<Account> &accounts) {
     int accountNumber = 0;
-    bool isValid = false;
-    
-    while (!isValid) {
+    bool isValid;
+    do{
         cout << "Please create a 6 digit account number: ";
         cin >> accountNumber;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         isValid = checkNewID(accountNumber);
-    }
+        if (isValid) {
+            // Basic for loop to check for duplicates in the accounts vector
+            for (int i = 0; std::vector<Transaction>::size_type(i) < accounts.size(); i++) {
+                if (accounts[i].accountNumber == accountNumber) {
+                    cout << "Account number already exists. Please choose a different one." << endl;
+                    isValid = false;
+                    break;  // Exit the loop if a duplicate is found
+                }
+            }
+        }
+    } while(!isValid);
 
     return accountNumber;
 }
@@ -63,69 +72,136 @@ double inputBalance() {
     return accountBalance;
 }
 
-int chooseID(const vector<Account> &account, bool secondID){
+int chooseID(const vector<Account> &account, bool isTransfer) {
     int accountID;
-    int index;
-    do{
-        cout << "Please enter the ID number of the account you wish to access :" << endl;
-        cin >> accountID;
-    }while(!confirmID(accountID, account, index, secondID));
-    return index;
-}
-
-int chooseID2(const vector<Account> &account){
-    if(account.size()<2){
-        cout << "Must have at least two accounts in the system to be able to transfer funds" << endl;
-        return -1;
+    int index = -1;
+    
+    // Display the appropriate prompt based on the transaction
+    if (isTransfer) {
+        cout << "What Account ID# are you transferring to?" << endl;
+    } else {
+        cout << "Please enter the ID number of the account you wish to access:" << endl;
     }
-    cout << "What Account ID# are you transfering to?" << endl;
-    return chooseID(account, true);
+
+    // Continuously ask for a valid ID number until it passes validation
+    do {
+        cin >> accountID;
+        if (checkCinFail()) continue;  // Check for invalid input
+
+    } while (!confirmID(accountID, account, index));
+
+    return index;  // Return the index of the selected account
 }
 
 void depositFunds(Account &account){
+    Transaction trnsct;
     int index = account.transactionCount;
     double funds = 0.0;
-    account.history[account.transactionCount].type = "deposit";
+
     do{
     cout << "Please enter the amount of money to be deposited" << endl;
     cin >> funds;
     } while(!checkTransaction(funds, account, index));
+    trnsct.type = "deposit";
+    trnsct.amount = funds;
+    trnsct.date = getDate(account);
 
     account.balance += funds;
+
     cout << "New account balance is $" << account.balance;
+    
+    account.history.push_back(trnsct);
     account.transactionCount++;
 }
 void withdrawFunds(Account &account){
+    Transaction trnsct;
     int index = account.transactionCount;
     double funds = 0.0;
-    account.history[index].type = "withdrawal";
+
     do{
     cout << "Please enter the amount of money to be withdrawn" << endl;
     cin >> funds;
     } while(!checkTransaction(funds, account, index));
 
+    trnsct.type = "withdrawal";
+    trnsct.amount = funds;
+    trnsct.date = getDate(account);
+
     account.balance -= funds;
+
     cout << "New account balance is $" << account.balance;
+    
+    account.history.push_back(trnsct);
     account.transactionCount++;
 }
 
 void transferFunds(Account &from, Account &to){
+    Transaction trnsct;
     int index = from.transactionCount;
     int index2 = to.transactionCount;
     double funds = 0.0;
-
-    from.history[index].type = "transfer";
-    to.history[index2].type = "transfer";
-
     do{
         cout << "Please enter the amount of money to be transfered" << endl;
         cin >> funds;
-    } while(!checkTransaction(funds, to, index));
+    } while(!checkTransaction(funds, from, from.transactionCount));  
+
+    trnsct.type = "transfer";
+    trnsct.amount = funds;
+    trnsct.date = getDate(from);
 
     from.balance -= funds;
     to.balance += funds;
+
     cout << "New account balance for " << from.accountNumber << " is $" << from.balance;
     cout << "New account balance for " << to.accountNumber << " is $" << to.balance;
+
+    from.history.push_back(trnsct);
+    to.history.push_back(trnsct);
     from.transactionCount++;
     to.transactionCount++;
+}
+
+Date getDate(const Account &account){
+    Date d;
+    do{
+        cout << "Please enter transaction Day, Month and Year separately." << endl;
+        cout << "Enter day: " << endl;
+        cin >> d.day;
+        if(checkCinFail()){
+            continue;
+        }
+        cout << "Enter month: " << endl;
+        cin >> d.month;
+        if(checkCinFail()){
+            continue;
+        }
+        cout << "Enter year: " << endl;
+        cin >> d.year;
+        if(checkCinFail()){
+            continue;
+        }
+    }while(!checkDate(d.day, d.month, d.year, account));
+}
+Date getDate(const Account &to, const Account &from){
+    Date d;
+    bool isValid = false;
+    do{
+        cout << "Please enter transaction Day, Month and Year separately." << endl;
+        cout << "Enter day: " << endl;
+        cin >> d.day;
+        if(checkCinFail()){
+            continue;
+        }
+        cout << "Enter month: " << endl;
+        cin >> d.month;
+        if(checkCinFail()){
+            continue;
+        }
+        cout << "Enter year: " << endl;
+        cin >> d.year;
+        if(checkCinFail()){
+            continue;
+        }
+    } while (!isValid);
+    return d;
 }

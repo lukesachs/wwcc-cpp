@@ -6,34 +6,37 @@
 #include "validation.h"
 using namespace std;
 
-void mainMenuInput(vector<Account> &account, int option){
+void mainMenuInput(vector<Account> &accounts, int option){
     bool isValid = false;
-    int subOption;
+    int subOption = -1;
     switch(option){
     case 1: //create account
-    account.push_back(createAccount());
+    accounts.push_back(createAccount(accounts));
         break;
     case 2: //access account info
         displayAccountOptions();
         do{
             cin >> subOption;
+            if (checkCinFail()) continue;
             if(accountMenuValid(subOption)){
                 isValid = true;
             }
         }while(!isValid);
 
-        accountMenuInput(account, subOption);
+        accountMenuInput(accounts, subOption);
     break;
-    case 3: //make transaction
+    case 3: { //make transaction
         displayTransactionOptions();
         do{
             cin >> subOption;
+            if (checkCinFail()) continue;
             if(transactionMenuValid(subOption)){
                 isValid = true;
             }
         }while(!isValid);
-        transactionMenuInput(account, subOption);
+        transactionMenuInput(accounts, subOption);
         break;
+    }
     case 4: //exit program
         shutDown();
         break;
@@ -45,17 +48,17 @@ void mainMenuInput(vector<Account> &account, int option){
 
 
 
-void accountMenuInput(vector<Account> &account, int option){
-    int ID = chooseID(account);
+void accountMenuInput(vector<Account> &accounts, int option){
+    int ID = chooseID(accounts, false);
     switch(option){
         case 1: //Transaction History
-            getTransactionHistory(account[ID]);
+            getTransactionHistory(accounts[ID]);
             break;
         case 2: //Account Statements
-            getAccountStatement(account[ID]);
+            getAccountStatement(accounts[ID]);
             break;
         case 3: //Personal Info
-            getPersonalInfo(account[ID]);
+            getPersonalInfo(accounts[ID]);
             break;
         default:
             cout << "ERROR" << endl;
@@ -63,25 +66,30 @@ void accountMenuInput(vector<Account> &account, int option){
         }
 }
 
-
-
-void transactionMenuInput(vector<Account> &account, int option){
-    int index = chooseID(account);
-    switch(option){
-        case 1: //Deposit Funds
-            depositFunds(account[index]);
+void transactionMenuInput(vector<Account> &accounts, int option){
+    int index = chooseID(accounts, false);
+    if (index == -1) { //pervents segmentation fault
+        cout << "Invalid account ID selected." << endl;
+        return;
+    }
+    int index2 = -1;
+    switch (option) {
+        case 1: // Deposit Funds
+            depositFunds(accounts[index]);
             break;
-        case 2: //Withdraw Funds
-            withdrawFunds(account[index]);
+        case 2: // Withdraw Funds
+            withdrawFunds(accounts[index]);
             break;
-        case 3: //Transfer Funds
-            int index2 = chooseID2(account);
-            if(index2 == -1){
-                break;
+        case 3: // Transfer Funds
+            index2 = chooseID(accounts, true);
+            if (index2 < 0 || index2 >= (int)accounts.size()) {
+                cout << "Invalid destination account. Transaction cancelled." << endl;
+                return;
             }
-            transferFunds(account[index], account[index2]);
+            // Transfer funds if both account IDs are valid
+            transferFunds(accounts[index], accounts[index2]);
             break;
-        default: 
+        default:
             cout << "ERROR" << endl;
             break;
     }

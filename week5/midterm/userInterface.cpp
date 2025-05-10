@@ -20,7 +20,7 @@ void displayUserOptions(){
 }
 
 void displayAccountOptions() {
-    cout << "Account options include 1. transaction history, 2. account statements, and 3. personal information.";
+    cout << "Account options include 1. transaction history, 2. account statements, and 3. personal information." << endl;
     cout << "   1. Access Transaction History" << endl;
     cout << "   2. Access Account Statement" << endl;
     cout << "   3. Access Personal Information" << endl;
@@ -48,7 +48,7 @@ void getTransactionHistory(const Account &account){
     for(int i = 0; i < account.transactionCount; i++){
         cout << i + 1 << "." << endl; 
         displayDate(account.history[i].date);
-        cout << account.history[i].type << " of $" << account.history[i].amount << endl;
+        cout << " - " << account.history[i].type << " of $" << account.history[i].amount << endl;
         
     }
 }

@@ -3,11 +3,10 @@
 
 #include <vector>
 #include "account.h"
-#include "menu.h"
 #include "userInterface.h"
 
-void mainMenuInput(vector<Account> &account, int option);
-void accountMenuInput(vector<Account> &account, int option);
-void transactionMenuInput(vector<Account> &account, int option);
+void mainMenuInput(std::vector<Account> &accounts, int option);
+void accountMenuInput(std::vector<Account> &accounts, int option);
+void transactionMenuInput(std::vector<Account> &accounts, int option);
 
 #endif //MENU_H

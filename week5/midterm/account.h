@@ -12,27 +12,29 @@ struct Date {
 };
 
 struct Transaction {
-    string type;  // "deposit", "withdrawal", "transfer"
+    std::string type;  // "deposit", "withdrawal", "transfer"
     double amount;
     Date date;
 };
 
 struct Account {
     int accountNumber;
-    string holderName;
+    std::string holderName;
     double balance;
     std::vector<Transaction> history;
     int transactionCount;
 };
 
 // Function prototypes (declarations only)
-Account createAccount();
-int getAccountNumber();
+Account createAccount(std::vector<Account> &accounts);
+int getAccountNumber(const std::vector<Account> &accounts);
 std::string inputAccountName();
 double inputBalance();
 void depositFunds(Account &account);
 void withdrawFunds(Account &account);
 void transferFunds(Account &from, Account &to);
-int chooseID(const vector<Account> &account);
-int chooseID2(const vector<Account> &account);
+int chooseID(const std::vector<Account> &account, bool secondID);
+int chooseID2(const std::vector<Account> &account);
+Date getDate(const Account &account);
+Date getDate(const Account &to, const Account &from);
 #endif // skips definition if already defined previously
