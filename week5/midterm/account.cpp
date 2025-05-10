@@ -95,13 +95,12 @@ int chooseID(const vector<Account> &account, bool isTransfer) {
 
 void depositFunds(Account &account){
     Transaction trnsct;
-    int index = account.transactionCount;
     double funds = 0.0;
 
     do{
     cout << "Please enter the amount of money to be deposited" << endl;
     cin >> funds;
-    } while(!checkTransaction(funds, account, index));
+    } while(!checkTransaction(funds, account, "deposit"));
     trnsct.type = "deposit";
     trnsct.amount = funds;
     trnsct.date = getDate(account);
@@ -115,13 +114,12 @@ void depositFunds(Account &account){
 }
 void withdrawFunds(Account &account){
     Transaction trnsct;
-    int index = account.transactionCount;
     double funds = 0.0;
 
     do{
     cout << "Please enter the amount of money to be withdrawn" << endl;
     cin >> funds;
-    } while(!checkTransaction(funds, account, index));
+    } while(!checkTransaction(funds, account, "withdrawal"));
 
     trnsct.type = "withdrawal";
     trnsct.amount = funds;
@@ -137,13 +135,12 @@ void withdrawFunds(Account &account){
 
 void transferFunds(Account &from, Account &to){
     Transaction trnsct;
-    int index = from.transactionCount;
-    int index2 = to.transactionCount;
+
     double funds = 0.0;
     do{
         cout << "Please enter the amount of money to be transfered" << endl;
         cin >> funds;
-    } while(!checkTransaction(funds, from, from.transactionCount));  
+    } while(!checkTransaction(funds, from, "transfer"));  
 
     trnsct.type = "transfer";
     trnsct.amount = funds;
@@ -181,6 +178,7 @@ Date getDate(const Account &account){
             continue;
         }
     }while(!checkDate(d.day, d.month, d.year, account));
+    return d;
 }
 Date getDate(const Account &to, const Account &from){
     Date d;

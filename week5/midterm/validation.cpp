@@ -96,23 +96,19 @@ bool confirmID(int ID, const vector<Account> &account, int &index){
     return false;
 }
 
-bool checkTransaction(double amount, const Account &account, int index) {
-    //index variable type change to be able to compare to account.history.size.
-    if (index < 0 || static_cast<vector<Transaction>::size_type>(index) >= account.history.size()) {
-        cout << "Invalid transaction history index." << endl;
-        return false;
-    }
-    string transactionType = account.history[index].type;
-    if (checkCinFail()) { 
+bool checkTransaction(double amount, const Account &account, const std::string &type){
+    if (checkCinFail()) {
         return false;
     } else if (amount < 0) {
         cout << "Invalid input! Transaction amount cannot be negative." << endl;
         return false;
     }
-    if((transactionType == "transfer" || transactionType == "withdrawal") && amount > account.balance){
+
+    if ((type == "transfer" || type == "withdrawal") && amount > account.balance){
         cout << "Insufficient funds. Transaction failed!" << endl;
         return false;
     }
+
     return true;
 }
 
@@ -127,40 +123,38 @@ bool checkCinFail() {
 }
 
 bool checkDate(int day, int month, int year, const Account &account){
-    const int calander[] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31};
-    
-    if(month < 1 || month > 12){
+    static const int calander[] = {31,29,31,30,31,30,31,31,30,31,30,31};
+
+    if (month < 1 || month > 12) {
         cout << "Invalid Input! Month must be 1-12." << endl;
         return false;
     }
-    if(day > calander[month-1] || day < 0){
-        cout << "Invalid Input! Day must be between 1-31 depending on month." << endl;
-        return false;
-    }
-    if(year < 1983){
-        cout << "Invalid Input! Year must be after the creation of the at home banking system (1983)." << endl;
-        return false;
-    }
-    if(account.transactionCount == 0){
-        return true;
-    }
-    int lastIndex = account.transactionCount - 1; //finds last index
-    int prevYear = account.history[lastIndex].date.year;
-    int prevMonth = account.history[lastIndex].date.month;
-    int prevDay = account.history[lastIndex].date.day;
 
-    if(account.history[lastIndex].date.year > year){
-        return true;
-    } else if(prevYear == year){
-        if(prevMonth < month){
-            return true;
-        } else if(prevMonth == month && prevDay < day) {
-            return true;
-        }
+    int maxDay = calander[month - 1];
+
+    if (day < 1 || day > maxDay) {
+        cout << "Invalid Input! Day must be between 1 and "
+             << maxDay << " for month " << month << "." << endl;
+        return false;
     }
-    cout << "Invalid Input! Date must be later than previous transaction!" << endl;
-    displayDate(account.history[account.transactionCount].date);
-    cout << endl;
+    if (year < 1983) {
+        cout << "Invalid Input! Year must be 1983 or later." << endl;
+        return false;
+    }
+    if (account.transactionCount == 0) {
+        return true;
+    }
+
+    int lastIndex = account.transactionCount - 1;
+    const Date &prev = account.history[lastIndex].date;
+
+    if (year > prev.year || (year == prev.year && month > prev.month) || (year == prev.year && month == prev.month && day > prev.day)){
+        return true;
+    }
+
+    cout << "Invalid Input! Date must be later than previous transaction on ";
+    displayDate(prev);
+    cout << "." << endl;
     return false;
 }
 
@@ -170,8 +164,11 @@ bool checkDate(int day, int month, int year, const Account &to, const Account &f
         cout << "Invalid Input! Month must be 1-12." << endl;
         return false;
     }
-    if(day < 1 || day > calander[month - 1]){
-        cout << "Invalid Input! Day must be between 1-31 depending on month." << endl;
+
+    int maxDay = calander[month - 1];
+
+    if(day < 1 || day > maxDay){
+        cout << "Invalid Input! Day must be between 1-" << maxDay << " for " << month << "." << endl;
         return false;
     }
     if(year < 1983){
