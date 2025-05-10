@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <limits>
@@ -13,7 +14,7 @@ using namespace std;
 // Main function
 int main() {
     vector<Account> accounts;
-
+    std::cout << std::fixed << std::setprecision(2); //so doubles dont display as scientific notation and only 2 decimals
     welcomeUser();
     accounts.push_back(createAccount(accounts));
     int option = 0;

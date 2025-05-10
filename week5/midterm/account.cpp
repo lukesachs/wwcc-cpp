@@ -107,7 +107,7 @@ void depositFunds(Account &account){
 
     account.balance += funds;
 
-    cout << "New account balance is $" << account.balance;
+    cout << "New account balance is $" << account.balance << endl;
     
     account.history.push_back(trnsct);
     account.transactionCount++;
@@ -127,7 +127,7 @@ void withdrawFunds(Account &account){
 
     account.balance -= funds;
 
-    cout << "New account balance is $" << account.balance;
+    cout << "New account balance is $" << account.balance << endl;
     
     account.history.push_back(trnsct);
     account.transactionCount++;
@@ -149,8 +149,8 @@ void transferFunds(Account &from, Account &to){
     from.balance -= funds;
     to.balance += funds;
 
-    cout << "New account balance for " << from.accountNumber << " is $" << from.balance;
-    cout << "New account balance for " << to.accountNumber << " is $" << to.balance;
+    cout << "New account balance for " << from.accountNumber << " is $" << from.balance << endl;
+    cout << "New account balance for " << to.accountNumber << " is $" << to.balance << endl;
 
     from.history.push_back(trnsct);
     to.history.push_back(trnsct);
