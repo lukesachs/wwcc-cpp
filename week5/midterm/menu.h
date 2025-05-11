@@ -9,4 +9,4 @@ void mainMenuInput(std::vector<Account> &accounts, int option);
 void accountMenuInput(std::vector<Account> &accounts, int option);
 void transactionMenuInput(std::vector<Account> &accounts, int option);
 
-#endif //MENU_H
+#endif //menu.h

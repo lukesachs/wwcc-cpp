@@ -11,7 +11,7 @@ void welcomeUser() {
     cout << "To access system features, please begin by creating an account!" << endl;
 }
 
-void displayUserOptions(){
+void displayMainMenuOptions(){
     cout << "\nPlease enter a number 1-4 to select:" << endl;
     cout << "   1. Create bank account" << endl;
     cout << "   2. Access bank account info" << endl;
@@ -37,11 +37,6 @@ void displayDate(Date d) {
     cout << d.month << "/" << d.day << "/" << d.year;
 }
 
-void shutDown(){
-    cout << "\nThank you for using the extremely legitimate banking service!\nWe hope you found our services to be helpful." << endl;
-    cout << "\n\n\nSHUTTING DOWN......." << endl;
-}
-
 void getTransactionHistory(const Account &account){
     cout << "\nTransaction History for " << account.holderName << ": ID#" << account.accountNumber << endl;
     cout << "Total transaction count: " << account.transactionCount << endl;
@@ -64,4 +59,9 @@ void getAccountStatement(const Account &account){
     getPersonalInfo(account);
     getTransactionHistory(account);
     cout << "*****************************************\n" << endl;
+}
+
+void shutDown(){
+    cout << "\nThank you for using the extremely legitimate banking service!\nWe hope you found our services to be helpful." << endl;
+    cout << "\n\n\nSHUTTING DOWN......." << endl;
 }

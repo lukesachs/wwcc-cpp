@@ -6,7 +6,7 @@
 #include "validation.h"
 using namespace std;
 
-//implement functions
+//creates new account
 Account createAccount(vector<Account> &accounts) {
     Account account;
     account.accountNumber = getAccountNumber(accounts);
@@ -17,7 +17,7 @@ Account createAccount(vector<Account> &accounts) {
     return account;
 }
 
-
+//gets new account number from user
 int getAccountNumber(const vector<Account> &accounts) {
     int accountNumber = 0;
     bool isValid;
@@ -27,12 +27,12 @@ int getAccountNumber(const vector<Account> &accounts) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         isValid = checkNewID(accountNumber);
         if (isValid) {
-            // Basic for loop to check for duplicates in the accounts vector
+            //check for duplicates in the accounts vector
             for (int i = 0; std::vector<Transaction>::size_type(i) < accounts.size(); i++) {
                 if (accounts[i].accountNumber == accountNumber) {
                     cout << "Account number already exists. Please choose a different one." << endl;
                     isValid = false;
-                    break;  // Exit the loop if a duplicate is found
+                    break;
                 }
             }
         }
@@ -40,7 +40,7 @@ int getAccountNumber(const vector<Account> &accounts) {
 
     return accountNumber;
 }
-
+//gets and returns name of account holder
 string inputAccountName() {
     string holderName;
     bool isValid = false;
@@ -48,7 +48,7 @@ string inputAccountName() {
     while (!isValid) {
         cout << "Please enter your first and last name separated by a space: ";
         getline(cin, holderName);
-        if (!checkAccountName(holderName)) {
+        if (!checkAccountName(holderName)) {//checks formatting of user input
             cout << "Invalid input!" << endl;
         } else {
             isValid = true;
@@ -57,7 +57,7 @@ string inputAccountName() {
 
     return holderName;
 }
-
+//gets balance of new user account
 double inputBalance() {
     double accountBalance;
     bool isValid = false;
@@ -66,33 +66,33 @@ double inputBalance() {
         cout << "Please enter your initial account balance in USD: ";
         cin >> accountBalance;
 
-        isValid = checkBalance(accountBalance);
+        isValid = checkBalance(accountBalance);//makes sure balance is valid
     }
 
     return accountBalance;
 }
-
+//allows user to input id and checks it, returning index of account in accounts vector
 int chooseID(const vector<Account> &account, bool isTransfer) {
     int accountID;
     int index = -1;
     
-    // Display the appropriate prompt based on the transaction
+    // Display the appropriate prompt for a transfer or to access an account
     if (isTransfer) {
         cout << "What Account ID# are you transferring to?" << endl;
     } else {
         cout << "Please enter the ID number of the account you wish to access:" << endl;
     }
 
-    // Continuously ask for a valid ID number until it passes validation
+    // loops until a valid id is entered
     do {
         cin >> accountID;
-        if (checkCinFail()) continue;  // Check for invalid input
+        if (checkCinFail()) continue;
 
     } while (!confirmID(accountID, account, index));
 
-    return index;  // Return the index of the selected account
+    return index;
 }
-
+//deposits funds into account, updation account info inside of accounts vector
 void depositFunds(Account &account){
     Transaction trnsct;
     double funds = 0.0;
@@ -112,6 +112,7 @@ void depositFunds(Account &account){
     account.history.push_back(trnsct);
     account.transactionCount++;
 }
+//same as deposit, but for withdrawals
 void withdrawFunds(Account &account){
     Transaction trnsct;
     double funds = 0.0;
@@ -132,7 +133,7 @@ void withdrawFunds(Account &account){
     account.history.push_back(trnsct);
     account.transactionCount++;
 }
-
+//transfers funds between two pre-exisitng accounts
 void transferFunds(Account &from, Account &to){
     Transaction trnsct;
 
@@ -157,7 +158,7 @@ void transferFunds(Account &from, Account &to){
     from.transactionCount++;
     to.transactionCount++;
 }
-
+//gets user input of date for most usecases
 Date getDate(const Account &account){
     Date d;
     do{
@@ -180,6 +181,7 @@ Date getDate(const Account &account){
     }while(!checkDate(d.day, d.month, d.year, account));
     return d;
 }
+//gets date for transfers
 Date getDate(const Account &to, const Account &from){
     Date d;
     bool isValid = false;

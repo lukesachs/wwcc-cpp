@@ -13,19 +13,20 @@ using namespace std;
 
 // Main function
 int main() {
+    
     vector<Account> accounts;
-    std::cout << std::fixed << std::setprecision(2); //so doubles dont display as scientific notation and only 2 decimals
+    cout << std::fixed << std::setprecision(2); //so doubles dont display as scientific notation and only 2 decimals
     welcomeUser();
-    accounts.push_back(createAccount(accounts));
+    accounts.push_back(createAccount(accounts)); // prompts user to create initial account
     int option = 0;
     do{
-        displayUserOptions();
+        displayMainMenuOptions();
         cin >> option;
-        if(!mainMenuValid(option)){
+        if(!mainMenuValid(option)){//loops main menu input if not valid
            continue;
         }
         mainMenuInput(accounts, option);
-    } while(option != 4);
+    } while(option != 4);//ends program if option 4 is selected
 
     return 0;
 }

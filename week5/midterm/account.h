@@ -30,11 +30,10 @@ Account createAccount(std::vector<Account> &accounts);
 int getAccountNumber(const std::vector<Account> &accounts);
 std::string inputAccountName();
 double inputBalance();
+int chooseID(const std::vector<Account> &account, bool secondID);
 void depositFunds(Account &account);
 void withdrawFunds(Account &account);
 void transferFunds(Account &from, Account &to);
-int chooseID(const std::vector<Account> &account, bool secondID);
-int chooseID2(const std::vector<Account> &account);
 Date getDate(const Account &account);
 Date getDate(const Account &to, const Account &from);
-#endif // skips definition if already defined previously
+#endif // account.h

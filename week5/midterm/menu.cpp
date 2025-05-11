@@ -11,7 +11,7 @@ void mainMenuInput(vector<Account> &accounts, int option){
     int subOption = -1;
     switch(option){
     case 1: //create account
-    accounts.push_back(createAccount(accounts));
+    accounts.push_back(createAccount(accounts));//creates account and adds to accounts vector
         break;
     case 2: //access account info
         displayAccountOptions();
@@ -49,7 +49,7 @@ void mainMenuInput(vector<Account> &accounts, int option){
 
 
 void accountMenuInput(vector<Account> &accounts, int option){
-    int ID = chooseID(accounts, false);
+    int ID = chooseID(accounts, false); //gets ID for account options
     switch(option){
         case 1: //Transaction History
             getTransactionHistory(accounts[ID]);
@@ -81,7 +81,7 @@ void transactionMenuInput(vector<Account> &accounts, int option){
             withdrawFunds(accounts[index]);
             break;
         case 3: // Transfer Funds
-            index2 = chooseID(accounts, true);
+            index2 = chooseID(accounts, true); //gets second ID index
             if (index2 < 0 || index2 >= (int)accounts.size()) {
                 cout << "Invalid destination account. Transaction cancelled." << endl;
                 return;

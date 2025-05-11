@@ -7,7 +7,17 @@
 using namespace std;
 
 
-bool checkNewID(int accountNumber) {
+bool checkCinFail() {//checks if user input is correct var type
+    if (cin.fail()) {
+        cout << "Invalid input! Only numbers allowed." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return true;
+    }
+    return false;
+}
+
+bool checkNewID(int accountNumber) {//checks user input when CREATING new ID
     if (checkCinFail()) { 
         return false;
     } else if (accountNumber < 100000 || accountNumber > 999999) {
@@ -18,25 +28,42 @@ bool checkNewID(int accountNumber) {
     }
 }
 
-bool checkAccountName(string holderName) {
+bool confirmID(int ID, const vector<Account> &account, int &index){//checks user input when ACCESSING existing ID
+    if (checkCinFail()) { 
+        return false;
+    } else if (ID < 100000 || ID > 999999) {
+        cout << "Invalid input! Account number must be 6 digits." << endl;
+        return false;
+    }
+    for(int i = 0; i < (int) account.size(); i++){
+        if(ID == account[i].accountNumber){
+            index = i;
+            return true;
+        }
+    }
+    cout << "Invalid input! ID number not found." << endl;
+    return false;
+}
+
+bool checkAccountName(string holderName) { //Checks new ID account owner name input
     if (holderName.empty() || holderName.find(" ") == string::npos) {
         return false;
     }
 
-    // Checks if the space is at the correct position
+    // Checks if space is at the correct position
     if (holderName.find(" ") == 0 || holderName.find(" ") == holderName.length() - 1) {
         return false;
     }
 
     // Checks if there is more than one space
     if (holderName.find("  ") != string::npos) {
-        return false; // Multiple spaces between words
+        return false;
     }
 
     return true;
 }
 
-bool checkBalance(double accountBalance) {
+bool checkBalance(double accountBalance) {//checks new account balance
     if (checkCinFail()) { 
         return false;
     } else if (accountBalance < 0) {
@@ -58,16 +85,6 @@ bool mainMenuValid(int option){
     }
 }
 
-bool transactionMenuValid(int option){
-    if (checkCinFail()) { 
-        return false;
-    } else if(option < 1 || option > 3){
-        cout << "Invalid Input! Must input 1, 2, or 3." << endl;
-        return false;
-    } else {
-        return true;
-    }
-}
 bool accountMenuValid(int option){
     if (checkCinFail()) { 
         return false;
@@ -79,24 +96,18 @@ bool accountMenuValid(int option){
     }
 }
 
-bool confirmID(int ID, const vector<Account> &account, int &index){
+bool transactionMenuValid(int option){
     if (checkCinFail()) { 
         return false;
-    } else if (ID < 100000 || ID > 999999) {
-        cout << "Invalid input! Account number must be 6 digits." << endl;
+    } else if(option < 1 || option > 3){
+        cout << "Invalid Input! Must input 1, 2, or 3." << endl;
         return false;
+    } else {
+        return true;
     }
-    for(int i = 0; i < (int) account.size(); i++){
-        if(ID == account[i].accountNumber){
-            index = i;
-            return true;
-        }
-    }
-    cout << "Invalid input! ID number not found." << endl;
-    return false;
 }
 
-bool checkTransaction(double amount, const Account &account, const std::string &type){
+bool checkTransaction(double amount, const Account &account, const std::string &type){//verifies type of transaction
     if (checkCinFail()) {
         return false;
     } else if (amount < 0) {
@@ -110,16 +121,6 @@ bool checkTransaction(double amount, const Account &account, const std::string &
     }
 
     return true;
-}
-
-bool checkCinFail() {
-    if (cin.fail()) {
-        cout << "Invalid input! Only numbers allowed." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        return true;
-    }
-    return false;
 }
 
 bool checkDate(int day, int month, int year, const Account &account){
@@ -137,7 +138,7 @@ bool checkDate(int day, int month, int year, const Account &account){
              << maxDay << " for month " << month << "." << endl;
         return false;
     }
-    if (year < 1983) {
+    if (year < 1983) {//1983 used because it was the year the first home internet banking system was created.
         cout << "Invalid Input! Year must be 1983 or later." << endl;
         return false;
     }
@@ -147,7 +148,7 @@ bool checkDate(int day, int month, int year, const Account &account){
 
     int lastIndex = account.transactionCount - 1;
     const Date &prev = account.history[lastIndex].date;
-
+    //makes sure date of transaction is after most recent transaction of  account
     if (year > prev.year || (year == prev.year && month > prev.month) || (year == prev.year && month == prev.month && day > prev.day)){
         return true;
     }
@@ -187,7 +188,7 @@ bool checkDate(int day, int month, int year, const Account &to, const Account &f
     int prevYear2 = to.history[lastIndex2].date.year;
     int prevMonth2 = to.history[lastIndex2].date.month;
     int prevDay2 = to.history[lastIndex2].date.day;
-
+    //makes sure date of transaction is after the most recent transaction of both accounts
     if(to.history[lastIndex2].date.year < year && from.history[lastIndex].date.year < year){
         return true;
     } else if(prevYear == year && to.history[lastIndex2].date.year < year){
