@@ -19,4 +19,4 @@ $(TARGET): $(OBJS)
 
 # Clean rule
 clean:
-	del $(OBJS) $(TARGET)
+	rm $(OBJS) $(TARGET)
