@@ -1,0 +1,15 @@
+STUDENT GRADE REPORT
+-------------------
+ID      Name               Courses Taken    GPA
+-----   ----------------   -------------    ----
+12345   Alice Johnson       5               3.80
+54321   Bobby Johnson       3               3.00
+
+CLASS STATISTICS
+----------------
+Total Students: 2
+Total Courses Taken: 8
+Class Average GPA: 3.40
+
+Highest GPA: Alice Johnson (3.80)
+Lowest GPA: Bobby Johnson (3.00)
