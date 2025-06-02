@@ -1,0 +1,6 @@
+2025-06-01 Laptop Electronics 5 899.99
+2025-06-01 Mouse Electronics 25 29.99
+2025-06-01 Monitor Electronics 3 299.99
+2025-06-01 Keyboard Electronics 12 79.99
+2025-06-01 Notebook Stationery 100 4.99
+2025-06-01 Pen Stationery 200 1.99
