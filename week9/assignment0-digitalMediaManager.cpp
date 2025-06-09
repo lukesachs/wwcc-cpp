@@ -16,10 +16,10 @@ class MediaItem {
 protected:
     // general variables for media
     string title;
-    string creator;    // director/author/artist
+    string creator;// director/author/artist
     int year;
     double rating;
-    int duration;      // minutes or pages
+    int duration;// minutes or pages
     vector<string> genres;
     vector<string> tags;
     int timesPlayed;
@@ -71,7 +71,7 @@ public:
 
     // Override printInfo for movies
     void printInfo() const override {
-        cout << "[MOVIE] " << title << " (" << year << ") ⭐" << fixed << setprecision(1) << rating << endl
+        cout << "[MOVIE] " << title << " (" << year << ") " << string(static_cast<int>(rating), '*') << endl
              << "Director: " << creator << endl
              << "Runtime: " << runtime << " minutes" << endl
              << "Studio: " << studio << endl
@@ -96,7 +96,7 @@ public:
     
     // Override printInfo for books
     void printInfo() const override {
-        cout << "[BOOK] " << title << " (" << year << ") ⭐" << fixed << setprecision(1) << rating << endl
+        cout << "[BOOK] " << title << " (" << year << ") " << string(static_cast<int>(rating), '*') << endl
              << "Author: " << creator << endl
              << "Pages: " << pages << endl
              << "Publisher: " << publisher << endl
@@ -120,7 +120,7 @@ public:
 
     // Override printInfo for songs
     void printInfo() const override {
-        cout << "[SONG] " << title << " (" << year << ") ⭐" << fixed << setprecision(1) << rating << endl
+        cout << "[SONG] " << title << " (" << year << ") " << string(static_cast<int>(rating), '*') << endl
              << "Artist: " << creator << endl
              << "Album: " << album << endl
              << "Times Played: " << timesPlayed << endl
@@ -451,6 +451,49 @@ void MediaCollection::searchMediaItem() {
             item->printInfo();
         }
     }
+
+    char sortChoice;
+        cout << "Sort results? (y/n): ";
+        cin >> sortChoice;
+        cin.ignore();
+
+        if (tolower(sortChoice) == 'y') {
+            cout << "1. By title  2. By year  3. By rating" << endl;
+            cout << "Choice: ";
+            int sortOption;
+            cin >> sortOption;
+            cin.ignore();
+
+            switch (sortOption) {
+                case 1:
+                    sort(results.begin(), results.end(),
+                         [](const MediaItem* a, const MediaItem* b) {
+                             return a->getTitle() < b->getTitle();
+                         });
+                    cout << "\nResults sorted by title...\n" << endl;
+                    break;
+                case 2:
+                    sort(results.begin(), results.end(),
+                         [](const MediaItem* a, const MediaItem* b) {
+                             return a->getDateAdded() < b->getDateAdded(); // or use year if available
+                         });
+                    cout << "\nResults sorted by year...\n" << endl;
+                    break;
+                case 3:
+                    sort(results.begin(), results.end(),
+                         [](const MediaItem* a, const MediaItem* b) {
+                             return a->getRating() > b->getRating();
+                         });
+                    cout << "\nResults sorted by rating...\n" << endl;
+                    break;
+                default:
+                    cout << "Invalid sort option. Displaying unsorted results.\n" << endl;
+                    break;
+            }
+            for (const auto& item : results) {
+                item->printInfo();
+        }
+        }
 }
 
 int main() {
@@ -497,7 +540,7 @@ int main() {
         cout << "2. Search Items" << endl;
         cout << "3. Add Media Item" << endl;
         cout << "4. View Summary" << endl;
-        cout << "0. Exit" << endl;
+        cout << "5. Exit" << endl;
         cout << "Enter choice: ";
         cin >> choice;
         cin.ignore();
@@ -516,7 +559,7 @@ int main() {
                 collection.printSummary();
                 break;
             case 5:
-                cout << "Exiting program......" << endl;
+                cout << "\nExiting program......" << endl;
                 break;
             default:
                 cout << "Invalid option, try again." << endl;
